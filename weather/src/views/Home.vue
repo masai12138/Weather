@@ -95,6 +95,13 @@ export default {
         <span class="temperature">{{forecastafter.tmp_min + '°' +'~'+forecastafter.tmp_max + '°'}}</span>
       </div>
     </div>
+    <div class="end">
+      <span class="end-title"><b>详细内容</b></span>
+      <ul class="q-ul" >
+          <li>{{'体感温度 :' + weather.now.fl + '°'}}</li><li>{{'相对湿度 :' + weather.now.hum}}</li>
+          <li>{{'降水量 :' + weather.now.pcpn}}</li><li>{{'能见度 :' + weather.now.vis}}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -107,6 +114,9 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.q-d{
+  width: 100%;
 }
 .top{
     display: flex;
@@ -181,7 +191,21 @@ export default {
   height: 50px;
   
 }
-
+.end{
+  margin: 20px;
+  width: 100%;
+}
+.end-title{
+  margin-left: 25px;
+  font-size: 20px;
+}
+.q-ul li{
+    width: 170px;
+    list-style: none;
+    float: left;
+    margin-bottom: 40px;
+    margin-top: 10px;
+}
 
 
 </style>
