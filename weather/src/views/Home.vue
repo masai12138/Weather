@@ -1,7 +1,7 @@
 <script>
 import axios from 'axios'
 import { constants } from 'crypto';
-
+import Three from '@/components/Three.vue'
 export default {
   data: function(){
     return {
@@ -9,8 +9,13 @@ export default {
       weatherRailer: null,
       forecastToday:null,
       forecastTomorrow: null,
-      forecastAfter: null
+      forecastAfter: null,
+      drawer: false,
+      direction: 'ltr',
     }
+  },
+  components: {
+    Three
   },
   methods:{
     getCondImage: function(){
@@ -71,8 +76,13 @@ export default {
 
 <template>
   <div id="app">
+    
     <div class="search-main">
       <img class="search" src="../assets/q.png" v-on:click="onSearchClick()"/>
+      <img class="search-drawer" src="../assets/menu.png" @click="drawer = true" type="primary" style="margin-left: 16px;"/>
+      <el-drawer title="HEllO" :visible.sync="drawer" :direction="direction">
+        <Three class="Three"></Three>
+      </el-drawer>
     </div>
     <div class="top" v-if="weather">
       <img class="top-condition-icon" :src="getCondImage()" alt=""/>
@@ -111,15 +121,20 @@ export default {
   margin: 0;
   padding: 0;
 }
+.Three{
+  margin: 0;
+}
 #app{
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: url('/assets/bg.jpg')
 }
 .search-main{
   width: 100%;
 }
 .top{
+    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -129,6 +144,11 @@ export default {
 .search{
   margin-top: 10px;
   float: right;
+  margin-right: 10px;
+}
+.search-drawer{
+  margin-top: 10px;
+  float: left;
 }
 .top-condition-icon{
   width: 50px;
@@ -155,6 +175,7 @@ export default {
   display: flex;
   flex-direction: row;
   margin: 20px 0 0 0;
+  
 }
 .middle div{
   display: flex;

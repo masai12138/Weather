@@ -5,6 +5,15 @@
     </keep-alive>
   </div>
 </template>
+<style scoped>
+#app{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+</style>
+
 
 
 
