@@ -16,7 +16,7 @@ export default {
       // return require('../assets/' + this.weather.now.cond_code + '.png')
       return require(`../assets/${this.weather.now.cond_code}.png`)
     },
-    onSearchlick :function(){
+    onSearchClick :function(){
       this.$router.push('/find')
     }
   },
@@ -71,7 +71,7 @@ export default {
 <template>
   <div id="app">
     <div class="search-main">
-      <img class="search" src="../assets/q.png" v-on:click="onSearchlick()"/>
+      <img class="search" src="../assets/q.png" v-on:click="onSearchClick()"/>
     </div>
     <div class="top" v-if="weather">
       <img class="top-condition-icon" :src="getCondImage()" alt=""/>
