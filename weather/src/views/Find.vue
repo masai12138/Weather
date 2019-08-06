@@ -43,13 +43,13 @@ export default {
         <el-button id="search-sub" class="el-icon-right" @click="getCityWeather()"></el-button>
         <div v-if="cityWeather" class="middle-main">
             <img :src="getIcon()" class="search-icon"/>
-            <span class="search-tmp">{{cityWeather.now.tmp + '°'}}</span>
-            <span class="search-location">{{cityWeather.basic.location + ',' + cityWeather.basic.cnty}}</span>
+            <span class="search-tmp">{{`${cityWeather.now.tmp}°`}}</span>
+            <span class="search-location">{{`${cityWeather.basic.location},${cityWeather.basic.cnty}`}}</span>
         </div>
         <div class="big-main" v-if="cityWeather">
             <ul class="search-ul" >
-                <li>{{'体感温度 :' + cityWeather.now.fl + '°'}}</li><li>{{'相对湿度 :' + cityWeather.now.hum}}</li>
-                <li>{{'降水量 :' + cityWeather.now.pcpn}}</li><li>{{'能见度 :' + cityWeather.now.vis}}</li>
+                <li>{{`体感温度 :${cityWeather.now.fl}°`}}</li><li>{{`相对湿度 :${cityWeather.now.hum}`}}</li>
+                <li>{{`降水量 :${cityWeather.now.pcpn}`}}</li><li>{{`能见度 :${cityWeather.now.vis}`}}</li>
             </ul>
         </div>
     </div>

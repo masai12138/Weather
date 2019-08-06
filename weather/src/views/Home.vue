@@ -1,6 +1,7 @@
 <script>
 import axios from 'axios'
 import { constants } from 'crypto';
+
 export default {
   data: function(){
     return {
@@ -75,8 +76,8 @@ export default {
     </div>
     <div class="top" v-if="weather">
       <img class="top-condition-icon" :src="getCondImage()" alt=""/>
-      <div><span class="top-temperature">{{weather.now.tmp + '°'}}</span></div>
-      <span class="top-location">{{weather.basic.location + ',' + weather.basic.cnty}}</span>
+      <div><span class="top-temperature">{{`${weather.now.tmp}°`}}</span></div>
+      <span class="top-location">{{`${weather.basic.location},${weather.basic.cnty}`}}</span>
     </div>
     <div class="middle" >
       <div class="today" >
@@ -98,8 +99,8 @@ export default {
     <div class="end">
       <span class="end-title"><b>详细内容</b></span>
       <ul class="search-ul" >
-          <li>{{'体感温度 :' + weather.now.fl + '°'}}</li><li>{{'相对湿度 :' + weather.now.hum}}</li>
-          <li>{{'降水量 :' + weather.now.pcpn}}</li><li>{{'能见度 :' + weather.now.vis}}</li>
+          <li>{{`体感温度 :${weather.now.fl}°`}}</li><li>{{`相对湿度 :${weather.now.hum}`}}</li>
+          <li>{{`降水量 :${weather.now.pcpn}`}}</li><li>{{`能见度 :${weather.now.vis}`}}</li>
       </ul>
     </div>
   </div>
