@@ -5,10 +5,10 @@ export default {
   data: function(){
     return {
       weather: null,
-      weatherrailer: null,
-      forecasttoday:null,
-      forecasttomorrow: null,
-      forecastafter: null
+      weatherRailer: null,
+      forecastToday:null,
+      forecastTomorrow: null,
+      forecastAfter: null
     }
   },
   methods:{
@@ -16,7 +16,7 @@ export default {
       // return require('../assets/' + this.weather.now.cond_code + '.png')
       return require(`../assets/${this.weather.now.cond_code}.png`)
     },
-    q :function(){
+    onSearchlick :function(){
       this.$router.push('/find')
     }
   },
@@ -49,15 +49,15 @@ export default {
         console.log(response1.statusText)
         return;
       }
-      let weatherrailerArray = response1.data.HeWeather6
-      that.weatherrailer = weatherrailerArray[0]
-      let forecastArray = that.weatherrailer.daily_forecast
-      that.forecasttoday = forecastArray[0]
-      that.forecasttomorrow = forecastArray[1]
-      that.forecastafter = forecastArray[2]
-      console.log(that.forecasttoday)
-      console.log(that.forecasttomorrow)
-      console.log(that.forecastafter)
+      let weatherRailerArray = response1.data.HeWeather6
+      that.weatherRailer = weatherRailerArray[0]
+      let forecastArray = that.weatherRailer.daily_forecast
+      that.forecastToday = forecastArray[0]
+      that.forecastTomorrow = forecastArray[1]
+      that.forecastAfter = forecastArray[2]
+      console.log(that.forecastToday)
+      console.log(that.forecastTomorrow)
+      console.log(that.forecastAfter)
       
     })
     .catch(function(e1){
@@ -70,8 +70,8 @@ export default {
 
 <template>
   <div id="app">
-    <div class="q-d">
-      <img class="q" src="../assets/q.png" v-on:click="q()"/>
+    <div class="search-main">
+      <img class="search" src="../assets/q.png" v-on:click="onSearchlick()"/>
     </div>
     <div class="top" v-if="weather">
       <img class="top-condition-icon" :src="getCondImage()" alt=""/>
@@ -80,24 +80,24 @@ export default {
     </div>
     <div class="middle" >
       <div class="today" >
-        <span class="date">{{forecasttoday.date}}</span>
-        <img class="middle-icon" alt="" :src="require(`../assets/${forecasttoday.cond_code_d}.png`)"/>
-        <span class="temperature">{{forecasttoday.tmp_min + '°' +'~'+forecasttoday.tmp_max + '°'}}</span>
+        <span class="date">{{forecastToday.date}}</span>
+        <img class="middle-icon" alt="" :src="require(`../assets/${forecastToday.cond_code_d}.png`)"/>
+        <span class="temperature">{{forecastToday.tmp_min + '°' +'~'+forecastToday.tmp_max + '°'}}</span>
       </div>
       <div class="tomorrow">
-        <span class="date">{{forecasttomorrow.date}}</span>
-        <img class="middle-icon" alt="" :src="require(`../assets/${forecasttomorrow.cond_code_d}.png`)"/>
-        <span class="temperature">{{forecasttomorrow.tmp_min + '°' +'~'+forecasttomorrow.tmp_max + '°'}}</span>
+        <span class="date">{{forecastTomorrow.date}}</span>
+        <img class="middle-icon" alt="" :src="require(`../assets/${forecastTomorrow.cond_code_d}.png`)"/>
+        <span class="temperature">{{forecastTomorrow.tmp_min + '°' +'~'+forecastTomorrow.tmp_max + '°'}}</span>
       </div>
       <div class="after-tomorrow">
-        <span class="date">{{forecastafter.date}}</span>
-        <img class="middle-icon" alt="" :src="require(`../assets/${forecastafter.cond_code_d}.png`)"/>
-        <span class="temperature">{{forecastafter.tmp_min + '°' +'~'+forecastafter.tmp_max + '°'}}</span>
+        <span class="date">{{forecastAfter.date}}</span>
+        <img class="middle-icon" alt="" :src="require(`../assets/${forecastAfter.cond_code_d}.png`)"/>
+        <span class="temperature">{{forecastAfter.tmp_min + '°' +'~'+forecastAfter.tmp_max + '°'}}</span>
       </div>
     </div>
     <div class="end">
       <span class="end-title"><b>详细内容</b></span>
-      <ul class="q-ul" >
+      <ul class="search-ul" >
           <li>{{'体感温度 :' + weather.now.fl + '°'}}</li><li>{{'相对湿度 :' + weather.now.hum}}</li>
           <li>{{'降水量 :' + weather.now.pcpn}}</li><li>{{'能见度 :' + weather.now.vis}}</li>
       </ul>
@@ -115,7 +115,7 @@ export default {
     flex-direction: column;
     align-items: center;
 }
-.q-d{
+.search-main{
   width: 100%;
 }
 .top{
@@ -125,7 +125,7 @@ export default {
     /* justify-content: center; */
     
 }
-.q{
+.search{
   margin-top: 10px;
   float: right;
 }
@@ -199,7 +199,7 @@ export default {
   margin-left: 25px;
   font-size: 20px;
 }
-.q-ul li{
+.search-ul li{
     width: 170px;
     list-style: none;
     float: left;
