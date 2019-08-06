@@ -82,17 +82,17 @@ export default {
       <div class="today" >
         <span class="date">{{forecastToday.date}}</span>
         <img class="middle-icon" alt="" :src="require(`../assets/${forecastToday.cond_code_d}.png`)"/>
-        <span class="temperature">{{forecastToday.tmp_min + '°' +'~'+forecastToday.tmp_max + '°'}}</span>
+        <span class="temperature">{{`${forecastToday.tmp_min}°~${forecastToday.tmp_max}°`}}</span>
       </div>
       <div class="tomorrow">
         <span class="date">{{forecastTomorrow.date}}</span>
         <img class="middle-icon" alt="" :src="require(`../assets/${forecastTomorrow.cond_code_d}.png`)"/>
-        <span class="temperature">{{forecastTomorrow.tmp_min + '°' +'~'+forecastTomorrow.tmp_max + '°'}}</span>
+        <span class="temperature">{{`${forecastTomorrow.tmp_min}°~${forecastTomorrow.tmp_max}°`}}</span>
       </div>
       <div class="after-tomorrow">
         <span class="date">{{forecastAfter.date}}</span>
         <img class="middle-icon" alt="" :src="require(`../assets/${forecastAfter.cond_code_d}.png`)"/>
-        <span class="temperature">{{forecastAfter.tmp_min + '°' +'~'+forecastAfter.tmp_max + '°'}}</span>
+        <span class="temperature">{{`${forecastAfter.tmp_min}°~${forecastAfter.tmp_max}°`}}</span>
       </div>
     </div>
     <div class="end">
