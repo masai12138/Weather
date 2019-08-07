@@ -33,15 +33,25 @@ export default {
     console.log("create")
 
     let that = this
+
+    //################### Promise 的方式 开始 ###################//
     // 调用 apis 的 requestWeatherNow 方法通过地址获取天气数据，then 中返回天气对象，catch 中处理异常数据
-    apis.requestWeatherNow('hangzhou')
-    .then(function(_weather){
+    // apis.requestWeatherNow('hangzhou')
+    // .then(function(_weather){
+    //   that.weather = _weather
+    // })
+    // .catch(function(error){
+    //   console.log('error, code: ', error.code, ', msg: ', error.msg)
+    // })
+    //################### Promise 的方式 结束 ###################//
+
+    //################### 回调 的方式 开始 ###################//
+    apis.requestWeatherNow2('hangzhou', function(_weather){
       that.weather = _weather
-    })
-    .catch(function(error){
+    }, function(error){
       console.log('error, code: ', error.code, ', msg: ', error.msg)
     })
-
+    //################### 回调 的方式 结束 ###################//
     
     axios.get('https://free-api.heweather.net/s6/weather/forecast?location=hangzhou&key=96e8453513a5487c923a71d839a180ca')
     .then(function(response1){
