@@ -128,7 +128,8 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url('/assets/bg.jpg')
+    background: url("../assets/bg.jpg") no-repeat 50% 0;
+
 }
 .search-main{
   width: 100%;
