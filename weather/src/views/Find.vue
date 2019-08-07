@@ -13,7 +13,7 @@ export default {
     methods : {
         getCityWeather : function(){
             let that = this
-            apis.requestCityWeahterNow(`${that.city}`)
+            apis.requestWeatherNow(`${that.city}`)
             .then(function(_cityWeather){
                 that.cityWeather = _cityWeather
             })

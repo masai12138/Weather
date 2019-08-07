@@ -100,40 +100,11 @@ function requestForecast(location) {
       });
   });
 }
-/**
- * 查询某个地点的当前天气
- * @param {*} location
- */
 
-function requestCityWeahterNow(location) {
-  return new Promise(function(resolve, reject) {
-    xAxios
-      .get(
-        `https://free-api.heweather.net/s6/weather/now?location=${location}&key=96e8453513a5487c923a71d839a180ca`
-      )
-      .then(function(response2) {
-        console.log("查询请求结果[requestCityWeahterNow]", response2);
-        if (response2.status !== 200) {
-          reject({ code: response2.status, msg: response2.statusText });
-          return;
-        }
-        let cityWeatherArray = response2.data.HeWeather6;
-        if (!cityWeatherArray) {
-          console.log("天气数据为空");
-          return;
-        }
-        resolve(cityWeatherArray[0]);
-      })
-      .catch(function(e) {
-        reject({ code: -100, msg: `请求失败:${e}` });
-      });
-  });
-}
 // 对外
 export default {
-  // requestWeatherNow 前一个是对外暴露的方法
-  requestWeatherNow,
-  requestWeatherNow2,
-  requestForecast,
-  requestCityWeahterNow
-};
+    // requestWeatherNow 前一个是对外暴露的方法
+    requestWeatherNow,
+    requestWeatherNow2,
+    requestForecast,
+}
