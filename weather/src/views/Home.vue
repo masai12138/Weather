@@ -62,7 +62,7 @@ export default {
       that.forecastAfter = forecastArray[2]
     })
     .catch(function(error){
-       console.log('error, code: ', error.code, ', msg: ', error.msg)
+       console.log(error)
     })
     //################### Promise 的方式 结束 ###################//
 
