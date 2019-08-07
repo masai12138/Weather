@@ -73,13 +73,69 @@ function requestWeatherNow2(location, success, fail) {
       });
 }
 
-// function requestForecast(){
 
-// }
-
+/**
+ * 请求某个地点的预报天气
+ * @param {*} location
+ */ 
+function requestForecast(location){
+    return new Promise(function(resolve,reject) {
+      axios
+      .get(
+        `https://free-api.heweather.net/s6/weather/forecast?location=${location}&key=96e8453513a5487c923a71d839a180ca`
+      )
+      .then(function(response1){
+        console.log("预告请求结果[requestForecast]",response1);
+        if(response1.status !== 200){
+          reject({ code: response1.status, msg: response1.statusText });
+          return;
+        }
+        let weatherRailerArray = response1.data.HeWeather6
+        if(!weatherRailerArray || weatherRailerArray.length <= 0){
+          reject({ code: -1, msg: `查不到地区${location}的天气数据数据` });
+          return;
+        }
+        resolve(weatherRailerArray[0]);
+      })
+      .catch(function(e){
+        reject({code : -100 , msg : `请求失败:${e}`})
+      });
+    });
+}
+/**
+ * 查询某个地点的当前天气
+ * @param {*} location
+ */ 
+function requestCityWeahterNow(location){
+  return new Promise(function(resolve,reject) {
+    axios
+    .get(
+      `https://free-api.heweather.net/s6/weather/now?location=${location}&key=96e8453513a5487c923a71d839a180ca`
+    )
+    .then(function(response2){
+      console.log("查询请求结果[requestCityWeahterNow]",response2);
+      if(response2.status !== 200){
+        reject({ code: response2.status, msg: response2.statusText });
+        return;
+      }
+      let cityWeatherArray = response2.data.HeWeather6
+        if(!cityWeatherArray){
+          console.log('天气数据为空');
+          return;
+      }
+      resolve(cityWeatherArray[0]);
+      
+    })
+    .catch(function(e){
+      reject({code : -100 , msg : `请求失败:${e}`})
+    });
+  });
+}
 // 对外
 export default {
     // requestWeatherNow 前一个是对外暴露的方法
     requestWeatherNow,
-    requestWeatherNow2
+    requestWeatherNow2,
+    requestForecast,
+    requestCityWeahterNow
 }

@@ -10,6 +10,7 @@ export default {
     return {
       weather: null,
       weatherRailer: null,
+      //{} 赋予一个空的对象没有任何属性,不推荐
       forecastToday:null,
       forecastTomorrow: null,
       forecastAfter: null,
@@ -31,9 +32,7 @@ export default {
   },
   created: function(){
     console.log("create")
-
     let that = this
-
     //################### Promise 的方式 开始 ###################//
     // 调用 apis 的 requestWeatherNow 方法通过地址获取天气数据，then 中返回天气对象，catch 中处理异常数据
     // apis.requestWeatherNow('hangzhou')
@@ -52,28 +51,23 @@ export default {
       console.log('error, code: ', error.code, ', msg: ', error.msg)
     })
     //################### 回调 的方式 结束 ###################//
-    
-    axios.get('https://free-api.heweather.net/s6/weather/forecast?location=hangzhou&key=96e8453513a5487c923a71d839a180ca')
-    .then(function(response1){
-      console.log("预告请求结果",response1)
-       if(response1.status !== 200){
-        console.log(response1.statusText)
-        return;
-      }
-      let weatherRailerArray = response1.data.HeWeather6
-      that.weatherRailer = weatherRailerArray[0]
+
+    //################### Promise 的方式 开始 ###################//
+    apis.requestForecast('hangzhou')
+    .then(function(_weatherForecast){
+      that.weatherRailer = _weatherForecast
       let forecastArray = that.weatherRailer.daily_forecast
       that.forecastToday = forecastArray[0]
       that.forecastTomorrow = forecastArray[1]
       that.forecastAfter = forecastArray[2]
-      console.log(that.forecastToday)
-      console.log(that.forecastTomorrow)
-      console.log(that.forecastAfter)
-      
     })
-    .catch(function(e1){
-      console.log("请求失败", e1)
+    .catch(function(error){
+       console.log('error, code: ', error.code, ', msg: ', error.msg)
     })
+    //################### Promise 的方式 结束 ###################//
+
+  
+
   }
 }
 
@@ -95,17 +89,17 @@ export default {
       <span class="top-location">{{`${weather.basic.location},${weather.basic.cnty}`}}</span>
     </div>
     <div class="middle" >
-      <div class="today" >
-        <span class="date">{{forecastToday.date}}</span>
+      <div class="today" v-if="forecastToday">
+        <span class="date">{{ forecastToday? forecastToday.date :''}}</span>
         <img class="middle-icon" alt="" :src="require(`../assets/${forecastToday.cond_code_d}.png`)"/>
         <span class="temperature">{{`${forecastToday.tmp_min}°~${forecastToday.tmp_max}°`}}</span>
       </div>
-      <div class="tomorrow">
+      <div class="tomorrow" v-if="forecastTomorrow">
         <span class="date">{{forecastTomorrow.date}}</span>
         <img class="middle-icon" alt="" :src="require(`../assets/${forecastTomorrow.cond_code_d}.png`)"/>
         <span class="temperature">{{`${forecastTomorrow.tmp_min}°~${forecastTomorrow.tmp_max}°`}}</span>
       </div>
-      <div class="after-tomorrow">
+      <div class="after-tomorrow" v-if="forecastAfter" >
         <span class="date">{{forecastAfter.date}}</span>
         <img class="middle-icon" alt="" :src="require(`../assets/${forecastAfter.cond_code_d}.png`)"/>
         <span class="temperature">{{`${forecastAfter.tmp_min}°~${forecastAfter.tmp_max}°`}}</span>
@@ -113,7 +107,7 @@ export default {
     </div>
     <div class="end">
       <span class="end-title"><b>详细内容</b></span>
-      <ul class="search-ul" >
+      <ul class="search-ul" v-if="weather">
           <li>{{`体感温度 :${weather.now.fl}°`}}</li><li>{{`相对湿度 :${weather.now.hum}`}}</li>
           <li>{{`降水量 :${weather.now.pcpn}`}}</li><li>{{`能见度 :${weather.now.vis}`}}</li>
       </ul>
@@ -133,8 +127,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: url("../assets/bg.jpg") no-repeat 50% 0;
-
 }
 .search-main{
   width: 100%;

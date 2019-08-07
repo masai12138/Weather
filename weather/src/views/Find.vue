@@ -1,5 +1,7 @@
 <script>
 import axios from 'axios'
+import apis from '../apis/api'
+
 export default {
     data : function(){
         return {
@@ -11,23 +13,12 @@ export default {
     methods : {
         getCityWeather : function(){
             let that = this
-            axios.get('https://free-api.heweather.net/s6/weather/now?&key=96e8453513a5487c923a71d839a180ca&',{
-                params:{
-                    location : that.city
-                }
+            apis.requestCityWeahterNow(`${that.city}`)
+            .then(function(_cityWeather){
+                that.cityWeather = _cityWeather
             })
-            .then(function(response){
-                console.log(response)
-                if(response.status !== 200){
-                    console.log(response.statusText)
-                    return;
-                }
-                let cityWeatherArray = response.data.HeWeather6
-                if(!cityWeatherArray){
-                    console.log('天气数据为空');
-                    return;
-                }
-                that.cityWeather = cityWeatherArray[0]
+            .catch(function(error){
+                console.log('error, code: ', error.code, ', msg: ', error.msg)
             })
         },
         getIcon(){
