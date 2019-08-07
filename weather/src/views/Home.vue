@@ -2,6 +2,9 @@
 import axios from 'axios'
 import { constants } from 'crypto';
 import Three from '@/components/Three.vue'
+// apis 名字可以随意取，../apis/api 表示对应的 js 文件，最后的 api.js 的后缀可以省略
+import apis from '../apis/api';
+
 export default {
   data: function(){
     return {
@@ -30,23 +33,15 @@ export default {
     console.log("create")
 
     let that = this
-    axios.get('https://free-api.heweather.net/s6/weather/now?location=hangzhou&key=96e8453513a5487c923a71d839a180ca')
-    .then(function(response){
-      console.log("请求结果",response)
-      if(response.status !== 200){
-        console.log(response.statusText)
-        return;
-      }
-      let weatherArray = response.data.HeWeather6
-      if(!weatherArray || weatherArray.length <= 0){
-        console.log('天气数据为空');
-        return;
-      }
-      that.weather = weatherArray[0]
+    // 调用 apis 的 requestWeatherNow 方法通过地址获取天气数据，then 中返回天气对象，catch 中处理异常数据
+    apis.requestWeatherNow('hangzhou')
+    .then(function(_weather){
+      that.weather = _weather
     })
-    .catch(function(e){
-      console.log("请求失败", e)
+    .catch(function(error){
+      console.log('error, code: ', error.code, ', msg: ', error.msg)
     })
+
     
     axios.get('https://free-api.heweather.net/s6/weather/forecast?location=hangzhou&key=96e8453513a5487c923a71d839a180ca')
     .then(function(response1){
